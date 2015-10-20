@@ -20,7 +20,17 @@ find_git_dirty() {
   fi
 }
 
-PROMPT_COMMAND="find_git_branch; find_git_dirty; $PROMPT_COMMAND"
+find_git_branch_dirty_clean() {
+  if [[ "$git_dirty" != "" ]]; then
+    git_branch_clean=''
+    git_branch_dirty="$git_branch"
+  else
+    git_branch_clean="$git_branch"
+    git_branch_dirty=''
+  fi
+}
+
+PROMPT_COMMAND="find_git_branch; find_git_dirty; find_git_branch_dirty_clean; $PROMPT_COMMAND"
 
 # Default Git enabled prompt with dirty state
 # export PS1="\u@\h \w \[$txtcyn\]\$git_branch\[$txtred\]\$git_dirty\[$txtrst\]\$ "
